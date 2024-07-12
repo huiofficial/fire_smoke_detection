@@ -1,8 +1,8 @@
 train: /Users/shining/Documents/GitHub/datasets/zgzl_dataset/images/train  # 训练集路径
 val: /Users/shining/Documents/GitHub/datasets/zgzl_dataset/images/val  # 验证集路径
 
-nc: 1  # 类别数目
-names: ['fire']  # 类别名称列表
+nc: 2  # 类别数目
+names: ['fire', 'smoke']  # 类别名称列表
 
 # 可选的增强参数
 augmentation:

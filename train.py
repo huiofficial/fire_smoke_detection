@@ -11,7 +11,7 @@ def validate(model, data_yaml):
 
 def main():
     # Load a COCO-pretrained YOLOv8n model
-    model = YOLO("yolov8n.pt")
+    model = YOLO("runs/train/exp1/weights/best.pt")
 
     # Display model information (optional)
     model.info()
@@ -41,7 +41,9 @@ def main():
     }
 
     # Train the model with custom augmentation parameters
-    results = model.train(**train_params, device="mps", amp=True, workers=8, exist_ok=True, single_cls=True)
+    results = model.train(**train_params, device="mps", amp=True, workers=8, exist_ok=True,
+                          # single_cls=True
+                          )
 
     # Validate the model on the zgzl_dataset validation set
     validate(model, "zgzl_dataset.yaml")

@@ -1,5 +1,7 @@
 import os
 import shutil
+import time
+from functools import wraps
 
 from PIL import Image
 from torchvision import transforms
@@ -30,7 +32,7 @@ def predict_and_save(model_path, input_dir, output_dir):
     clear_or_create_dir(output_dir)
 
     # 获取并排序输入目录中的所有图片文件名
-    img_files = sorted([f for f in os.listdir(input_dir) if f.endswith(('.JPG', '.jpeg', '.png', '.bmp'))])
+    img_files = sorted([f for f in os.listdir(input_dir) if f.endswith(('.JPG', '.jpg', '.png', '.bmp'))])
 
     # 使用 tqdm 显示预测进度
     for img_name in img_files:
@@ -48,6 +50,20 @@ def predict_and_save(model_path, input_dir, output_dir):
         render.save(output_image_path)
 
 
+def timer(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        start_time = time.time()
+        result = func(*args, **kwargs)
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        print(f"Total execution time: {elapsed_time:.2f} seconds")
+        return result
+
+    return wrapper
+
+
+@timer
 def main():
     # 训练好的模型路径
     trained_model_path = "runs/train/exp1/weights/best.pt"
